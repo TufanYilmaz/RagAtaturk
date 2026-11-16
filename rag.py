@@ -27,3 +27,21 @@ for file in Path("Kaynaklar").glob("*.txt"):
 
 chunk_vectors = embed(chunks)
 print(f"{len(chunks)} adet chunk indexlendi.")
+
+def retrive(question,k=3):
+    q=embed([question])[0]
+    scores = chunk_vectors @ q / (np.linalg.norm(chunk_vectors,axis=1) * np.linalg.norm(q))
+    return [chunks[i] for i in np.argsort(scores)[::-1][:k]]
+
+while True:
+    question = input("Sor: ")
+    context ="\n\n".join(retrive(question))
+    print(context)
+    promt = f"""Bu sorulara SADECE aşağıdaki context'i kullanarak cevap ver 
+eğer cevap context içinde değilse "Bilmiyorum" olarak cevap ver
+
+Context:
+{context}
+Question:
+{question}"""
+    print("\n" + ask_llm(promt) +"\n")
