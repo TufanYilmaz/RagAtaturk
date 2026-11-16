@@ -10,10 +10,12 @@ def embed(texts):
     r=requests.post(f"{OLLAMA}/api/embed",json={"model":EMBED_MODEL,"input":texts})
     return np.array(r.json()["embeddings"])
 
-def ask_llm(prompt)
+def ask_llm(prompt):
     r=requests.post(f"{OLLAMA}/api/chat",json={
         "model":CHAT_MODEL,
         "stream":False,
         "messages": [{"role":"user","content":prompt}],
     })
     return r.json()["message"]["content"]
+
+print(ask_llm("Türkiyenin başkenti neresi"))
