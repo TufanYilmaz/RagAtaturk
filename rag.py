@@ -44,4 +44,4 @@ Context:
 {context}
 Question:
 {question}"""
-    print("\n" + ask_llm(promt) +"\n")
+    print("\n Cevap: " + ask_llm(promt) +"\n")
