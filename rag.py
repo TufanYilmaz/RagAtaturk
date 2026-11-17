@@ -22,7 +22,8 @@ def ask_llm(prompt):
 #print(ask_llm("Türkiyenin başkenti neresi"))
 
 chunks=[]
-for file in Path("Kaynaklar").glob("*.txt"):
+source_files = Path("Kaynaklar")
+for file in [*source_files.glob("*.txt"), *source_files.glob("*.md")]:
     chunks+=[p.strip() for p in file.read_text(encoding="utf-8").split("\n\n") if p.strip()]
 
 chunk_vectors = embed(chunks)
